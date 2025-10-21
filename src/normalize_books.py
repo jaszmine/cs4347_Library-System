@@ -1,4 +1,4 @@
-# Read from data/books.csv --> normalize data --> write to normalized_book.csv
+# Read from data/books.csv --> normalize data --> write to normalzied_data/normalized_book.csv
 # book.csv COLS: ISBN10	ISBN13	Title	Author	Cover	Publisher	Pages
 
 import csv
