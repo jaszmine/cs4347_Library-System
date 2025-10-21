@@ -1,8 +1,14 @@
 # Read from data/books.csv --> normalize data --> write to normalized_book.csv
 
 import csv
+import os
 
 def normalize_books(input_file, book_output, book_authors_output, authors_output):
+    # Ensure the normalized_data directory exists
+    os.makedirs(os.path.dirname(book_output), exist_ok=True)
+    os.makedirs(os.path.dirname(book_authors_output), exist_ok=True)
+    os.makedirs(os.path.dirname(authors_output), exist_ok=True)
+
     # Read the original books.csv file
     with open(input_file, mode='r', newline='', encoding='utf-8') as infile:
         reader = csv.DictReader(infile)
@@ -46,11 +52,12 @@ def normalize_books(input_file, book_output, book_authors_output, authors_output
         writer.writeheader()
         writer.writerows({'Author_id': author_id, 'Name': name} for name, author_id in authors.items())
 
-# Define file paths
-input_file = 'data/books.csv'
-book_output = 'normalized_data/book.csv'
-book_authors_output = 'normalized_data/book_authors.csv'
-authors_output = 'normalized_data/authors.csv'
+if __name__ == "__main__":
+    # Define file paths
+    input_file = '../data/books.csv'
+    book_output = '../normalized_data/book.csv'
+    book_authors_output = '../normalized_data/book_authors.csv'
+    authors_output = '../normalized_data/authors.csv'
 
-# Normalize the books data
-normalize_books(input_file, book_output, book_authors_output, authors_output)
+    # Normalize the books data
+    normalize_books(input_file, book_output, book_authors_output, authors_output)
