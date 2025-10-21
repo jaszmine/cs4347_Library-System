@@ -46,15 +46,15 @@ The project aims to develop a Library Management System using SQL. The first mil
 ## Directory Structure
 
 ```tree
-Library-System-Project/
+cs4347_Library-System/
 ├── data/
 │   ├── books.csv
 │   ├── borrowers.csv
 ├── normalized_data/
-│   ├── book.csv
-│   ├── book_authors.csv
-│   ├── authors.csv
-│   ├── borrower.csv
+│   ├── normalized_book.csv
+│   ├── normalized_book_authors.csv
+│   ├── normalized_authors.csv
+│   ├── normalized_borrower.csv
 ├── src/
 │   ├── normalize_books.py
 │   ├── normalize_borrowers.py
