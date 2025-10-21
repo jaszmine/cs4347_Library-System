@@ -16,32 +16,9 @@ This project involves the creation of a database host application that interface
 The project aims to develop a Library Management System using SQL. The first milestone involves normalizing the provided `books.csv` and `borrowers.csv` files into separate tables that adhere to the schema defined below.
 
 ### Schema
-- **BOOK**
-  - ISBN
-  - Title
-- **BOOK_AUTHORS**
-  - ISBN
-  - Author_id
-- **AUTHORS**
-  - Author_id
-  - Name
-- **BORROWER**
-  - Card_id
-  - Bname
-  - Address
-  - Phone
-  - Ssn
-- **BOOK_LOANS**
-  - Loan_id
-  - ISBN
-  - Card_id
-  - Date_out
-  - Due_date
-  - Date_in
-- **FINES**
-  - Fine_amt
-  - Loan_id
-  - Paid
+<img width="579" height="579" alt="library-system_schema drawio" src="https://github.com/user-attachments/assets/e9968d64-d5d7-472f-ad1f-58b41e338471" />
+
+
 
 ## Directory Structure
 
@@ -58,10 +35,10 @@ cs4347_Library-System/
 ├── src/
 │   ├── normalize_books.py
 │   ├── normalize_borrowers.py
+│   └── generate_visualizations.py
 ├── tests/
 │   ├── test_normalize_books.py
 │   ├── test_normalize_borrowers.py
-├── setup.sh
 └── README.md
 ```
 
