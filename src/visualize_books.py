@@ -7,20 +7,42 @@ import matplotlib.pyplot as plt
 # Auto-detect base directory
 BASE_DIR = os.path.dirname(__file__)
 
+# added by J v2
+def create_visualizations_folder():
+    """Creates visualizations folder if it doesn't exist and returns the path."""
+    vis_dir = os.path.join(BASE_DIR, "..", "visualizations")
+    os.makedirs(vis_dir, exist_ok=True)
+    return vis_dir
+
 def read_csv(filename):
     """Reads a TSV (tab-separated) file into a list of dictionaries."""
     path = os.path.join(BASE_DIR, filename)
     with open(path, newline='', encoding='utf-8-sig') as f:
         return list(csv.DictReader(f, delimiter='\t'))
+    
+# added by J v2 - Create visualizations folder
+VIS_DIR = create_visualizations_folder()
 
+def save_current_plot(filename):
+    """Saves the current plot to the visualizations folder"""
+    filepath = os.path.join(VIS_DIR, filename)
+    plt.savefig(filepath, dpi=300, bbox_inches='tight')
+    print(f"Saved visualization: {filename}")
 
 # Read data from books.csv
-books = read_csv(r"..\data\books.csv")
+books = read_csv(r"../data/books.csv")
 
 
 if not books:
     print("No book data found.")
     exit()
+    
+# added by J v2
+def save_plot(filename):
+    """Saves the current plot to the visualizations folder."""
+    filepath = os.path.join(VIS_DIR, filename)
+    plt.savefig(filepath, dpi=300, bbox_inches='tight')
+    print(f"Saved: {filename}")
 
 
 # 1. Top Authors by Book Count
@@ -40,6 +62,7 @@ if top_authors:
     plt.xlabel("Book Count")
     plt.ylabel("Author")
     plt.tight_layout()
+    save_current_plot("top_authors.png") # added j v2
     plt.show()
 else:
     print("No author data found in books.csv")
@@ -61,6 +84,7 @@ if publisher_count:
     plt.xlabel("Book Count")
     plt.ylabel("Publisher")
     plt.tight_layout()
+    save_current_plot("top_publishers.png") # added j v2
     plt.show()
 else:
     print("No publisher data found in books.csv")
@@ -82,6 +106,7 @@ if pages:
     plt.xlabel("Number of Pages")
     plt.ylabel("Frequency")
     plt.tight_layout()
+    save_current_plot("page_count_distribution.png") # added j v2
     plt.show()
 else:
     print("No valid page data found in books.csv")
