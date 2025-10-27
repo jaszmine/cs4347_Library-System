@@ -54,6 +54,6 @@ if __name__ == "__main__":
     authors = '../normalized_data/normalized_authors.csv'
     book_authors = '../normalized_data/normalized_book_authors.csv'
 
-    # Normalize the books data
+    # Test data
     test_normalize_books(books, authors, book_authors)
     print("All files validated")
