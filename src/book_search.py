@@ -1,4 +1,4 @@
-import csv, os
+import csv, os, mysql.connector
 
 def book_search(search, books, authors, book_authors):
     matches = []
