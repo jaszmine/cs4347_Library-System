@@ -36,7 +36,7 @@ def createTables(books, authors, bookauthors, borrowers):
         "  `name` varchar(20) NOT NULL,"
         "  `card_id` int(10) NOT NULL,"
         "  `address` varchar(100) NOT NULL,"
-        "  `phone` int(10),"
+        "  `phone` varchar(10),"
         "  PRIMARY KEY (`card_id`),"
         "UNIQUE KEY `ssn` (`ssn`)"
         ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4"
