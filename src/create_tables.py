@@ -1,7 +1,7 @@
 import csv, os, mysql.connector
 from mysql.connector import errorcode
 
-def createTables(books, authors, bookauthors):
+def createTables(books, authors, bookauthors, borrowers):
 
     TABLES = {}
     TABLES['books'] = (
@@ -150,6 +150,19 @@ def createTables(books, authors, bookauthors):
                 cursor.execute(add_bookauthor, bookauthor_data)
             db.commit()
 
+        with open(borrowers, mode='r', newline='', encoding='utf-8') as f:
+
+            reader = csv.DictReader(f)
+
+            add_borrower = ("INSERT INTO borrowers "
+                        "(`ssn`, `name`, `card_id`, `address`, `phone`)"
+                        "VALUES (%s, %s, %s, %s, %s)")
+
+            for row in reader:
+                borrower_data = (row['Ssn'], row['Bname'], row['Card_id'], row['Address'], row['Phone'])
+                cursor.execute(add_borrower, borrower_data)
+            db.commit()
+
     cursor.execute("SET FOREIGN_KEY_CHECKS = @OLD_FOREIGN_KEY_CHECKS")
     cursor.close()
     db.close()
@@ -159,6 +172,7 @@ if __name__ == "__main__":
     books = '../normalized_data/normalized_book.csv'
     authors = '../normalized_data/normalized_authors.csv'
     book_authors = '../normalized_data/normalized_book_authors.csv'
+    borrowers = '../normalized_data/normalized_borrowers.csv'
 
     # Create Database
-    createTables(books, authors, book_authors)
+    createTables(books, authors, book_authors, borrowers)
