@@ -21,6 +21,38 @@ def borrowers():
     ttk.Button(frm, text="Quit", command=root.destroy).grid(column=0, row=3)
     root.mainloop()
 
+def add_borrower():
+    name = tkinter.simpledialog.askstring("Add Borrower", "Name:")
+    if not name:
+        return
+
+    ssn = tkinter.simpledialog.askstring("Add Borrower", "SSN:")
+    if not ssn:
+        return
+
+    address = tkinter.simpledialog.askstring("Add Borrower", "Address:")
+    if not address:
+        return
+
+    phone = tkinter.simpledialog.askstring("Add Borrower", "Phone (optional):")
+    if phone is not None:
+        phone = phone.strip() or None
+
+    try:
+        card_id = borrower_management.add_borrower(
+            name.strip(),
+            ssn.strip(),
+            address.strip(),
+            phone
+        )
+        messagebox.showinfo("Success", f"Borrower added.\nCard ID: {card_id}")
+    except ValueError as e:
+        messagebox.showwarning("Invalid Input", str(e))
+    except RuntimeError as e:
+        messagebox.showerror("Error", str(e))
+    except Exception as e:
+        messagebox.showerror("Error", f"{e}")
+
 def payfines():
     query = tkinter.simpledialog.askstring("Card ID", "")
 
