@@ -29,7 +29,7 @@ def book_search(search):
     #    count += 1
 
     root = tkinter.Tk()
-    root.geometry('1000x1000')
+    root.geometry('1500x1000')
     listbox = Listbox(root, width=300)
 
     listbox.pack(side = LEFT, fill = BOTH)
