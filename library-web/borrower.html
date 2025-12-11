@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Profile - Library System</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+<div class="container">
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="nav-brand">
+      <a href="index.html" class="logo-link">
+        <i class="fas fa-book"></i>
+        <span>Library System</span>
+      </a>
+    </div>
+    <div class="nav-links">
+      <a href="index.html"><i class="fas fa-home"></i> Home</a>
+      <a href="search.html"><i class="fas fa-search"></i> Search Books</a>
+      <a href="profile.html" class="active"><i class="fas fa-user"></i> My Profile</a>
+      <a href="fines.html"><i class="fas fa-money-bill"></i> My Fines</a>
+      <a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+    </div>
+  </nav>
+
+  <!-- Profile Content -->
+  <div class="profile-container">
+    <!-- Sidebar -->
+    <div class="profile-sidebar">
+      <div class="user-card">
+        <div class="avatar">
+          <i class="fas fa-user-circle"></i>
+        </div>
+        <h2 id="userName">John Doe</h2>
+        <p class="user-id">Card ID: <span id="cardId">1001</span></p>
+        <div class="user-stats">
+          <div class="stat">
+            <i class="fas fa-book"></i>
+            <div>
+              <span class="stat-value" id="currentLoans">0</span>
+              <span class="stat-label">Books Out</span>
+            </div>
+          </div>
+          <div class="stat">
+            <i class="fas fa-clock"></i>
+            <div>
+              <span class="stat-value" id="overdueLoans">0</span>
+              <span class="stat-label">Overdue</span>
+            </div>
+          </div>
+          <div class="stat">
+            <i class="fas fa-dollar-sign"></i>
+            <div>
+              <span class="stat-value" id="totalFines">$0.00</span>
+              <span class="stat-label">Fines Due</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sidebar-menu">
+        <a href="#personal" class="menu-item active" data-section="personal">
+          <i class="fas fa-user"></i> Personal Info
+        </a>
+        <a href="#loans" class="menu-item" data-section="loans">
+          <i class="fas fa-book-open"></i> My Loans
+        </a>
+        <a href="#fines" class="menu-item" data-section="fines">
+          <i class="fas fa-money-bill"></i> Fines & Payments
+        </a>
+        <a href="#history" class="menu-item" data-section="history">
+          <i class="fas fa-history"></i> Reading History
+        </a>
+        <a href="#settings" class="menu-item" data-section="settings">
+          <i class="fas fa-cog"></i> Settings
+        </a>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="profile-content">
+      <!-- Personal Info Section -->
+      <section id="personalSection" class="profile-section active">
+        <div class="section-header">
+          <h1><i class="fas fa-user"></i> Personal Information</h1>
+          <button class="btn-edit" id="editPersonalBtn">
+            <i class="fas fa-edit"></i> Edit
+          </button>
+        </div>
+
+        <div class="info-card">
+          <div class="info-grid">
+            <div class="info-item">
+              <label>Full Name</label>
+              <p id="fullName">John Doe</p>
+            </div>
+            <div class="info-item">
+              <label>Card Number</label>
+              <p id="cardNumber">1001</p>
+            </div>
+            <div class="info-item">
+              <label>SSN</label>
+              <p id="userSSN">123-45-6789</p>
+            </div>
+            <div class="info-item">
+              <label>Email</label>
+              <p id="userEmail">john.doe@example.com</p>
+            </div>
+            <div class="info-item">
+              <label>Phone</label>
+              <p id="userPhone">(555) 123-4567</p>
+            </div>
+            <div class="info-item">
+              <label>Address</label>
+              <p id="userAddress">123 Main St, City, State 12345</p>
+            </div>
+            <div class="info-item">
+              <label>Member Since</label>
+              <p id="memberSince">January 15, 2024</p>
+            </div>
+            <div class="info-item">
+              <label>Total Books Borrowed</label>
+              <p id="totalBorrowed">24</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Edit Form (Hidden by default) -->
+        <div class="edit-form" id="personalEditForm" style="display: none;">
+          <h3>Edit Personal Information</h3>
+          <form id="personalForm">
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="editName">Full Name</label>
+                <input type="text" id="editName" class="input-field">
+              </div>
+              <div class="form-group">
+                <label for="editEmail">Email</label>
+                <input type="email" id="editEmail" class="input-field">
+              </div>
+              <div class="form-group">
+                <label for="editPhone">Phone</label>
+                <input type="tel" id="editPhone" class="input-field">
+              </div>
+              <div class="form-group full-width">
+                <label for="editAddress">Address</label>
+                <textarea id="editAddress" class="input-field" rows="3"></textarea>
+              </div>
+            </div>
+            <div class="form-actions">
+              <button type="button" class="btn-secondary" id="cancelEditBtn">Cancel</button>
+              <button type="submit" class="btn-primary">Save Changes</button>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <!-- Current Loans Section -->
+      <section id="loansSection" class="profile-section">
+        <div class="section-header">
+          <h1><i class="fas fa-book-open"></i> Current Loans</h1>
+          <button class="btn-primary" id="renewBtn" disabled>
+            <i class="fas fa-sync"></i> Renew Selected
+          </button>
+        </div>
+
+        <div class="loans-list" id="currentLoansList">
+          <!-- Loans will be loaded here by JavaScript -->
+          <div class="empty-state">
+            <i class="fas fa-book-open"></i>
+            <h3>No active loans</h3>
+            <p>You don't have any books checked out at the moment.</p>
+            <a href="search.html" class="btn-primary">Browse Books</a>
+          </div>
+        </div>
+
+        <!-- Loan Item Template -->
+        <template id="loanTemplate">
+          <div class="loan-item">
+            <div class="loan-checkbox">
+              <input type="checkbox" class="loan-select">
+            </div>
+            <div class="loan-info">
+              <h3 class="loan-title"></h3>
+              <p class="loan-author"></p>
+              <div class="loan-details">
+                <span class="loan-isbn"></span>
+                <span class="loan-checkout">Checked out: <span class="date-out"></span></span>
+              </div>
+            </div>
+            <div class="loan-dates">
+              <div class="date-item">
+                <label>Due Date</label>
+                <span class="due-date"></span>
+              </div>
+              <div class="date-item">
+                <label>Days Left</label>
+                <span class="days-left"></span>
+              </div>
+              <div class="date-item">
+                <label>Status</label>
+                <span class="loan-status"></span>
+              </div>
+            </div>
+            <div class="loan-actions">
+              <button class="btn-secondary renew-single-btn">
+                <i class="fas fa-sync"></i> Renew
+              </button>
+            </div>
+          </div>
+        </template>
+      </section>
+
+      <!-- Fines Section -->
+      <section id="finesSection" class="profile-section">
+        <div class="section-header">
+          <h1><i class="fas fa-money-bill"></i> Fines & Payments</h1>
+          <button class="btn-primary" id="payFinesBtn" disabled>
+            <i class="fas fa-credit-card"></i> Pay Fines
+          </button>
+        </div>
+
+        <div class="fines-summary">
+          <div class="summary-card total-fines">
+            <i class="fas fa-dollar-sign"></i>
+            <div>
+              <h3>Total Due</h3>
+              <p class="amount" id="totalFinesAmount">$0.00</p>
+            </div>
+          </div>
+          <div class="summary-card overdue-fines">
+            <i class="fas fa-clock"></i>
+            <div>
+              <h3>Overdue Items</h3>
+              <p class="amount" id="overdueItems">0</p>
+            </div>
+          </div>
+          <div class="summary-card paid-fines">
+            <i class="fas fa-check-circle"></i>
+          </div>
+        </div>
+
+        <div class="fines-table">
+          <h3>Fine Details</h3>
+          <table id="finesTable">
+            <thead>
+            <tr>
+              <th>Book Title</th>
+              <th>ISBN</th>
+              <th>Due Date</th>
+              <th>Days Overdue</th>
+              <th>Fine Amount</th>
+              <th>Status</th>
+            </tr>
+            </thead>
+            <tbody>
+            <!-- Fines will be loaded here -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+<!-- Load existing script.js for API calls -->
+<script src="script.js"></script>
+<!-- Load profile-specific JavaScript -->
+<script src="profile.js"></script>
+</body>
+</html>

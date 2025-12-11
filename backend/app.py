@@ -160,7 +160,7 @@ def pay_fines():
             JOIN book_loans bl ON f.loan_id = bl.loan_id
             SET f.paid = 1
             WHERE bl.card_id = %s AND f.paid = 0
-        """, (card_id,))
+            """, (card_id,))
 
         return jsonify({
             'success': True,
