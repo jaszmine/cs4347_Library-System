@@ -122,6 +122,36 @@ def get_fines():
     except Exception as e:
         return jsonify({'success': False, 'error': str(e)}), 500
 
+@app.route('/api/borrowers/add', methods=['POST'])
+def add_borrower_api():
+    try:
+        data = request.get_json()
+
+        name = data.get("name", "").strip()
+        ssn = data.get("ssn", "").strip()
+        address = data.get("address", "").strip()
+        phone = data.get("phone", "").strip() if data.get("phone") else None
+
+        import borrower_management
+        card_id = borrower_management.add_borrower(name, ssn, address, phone)
+
+        return jsonify({
+            "success": True,
+            "message": "Borrower added successfully",
+            "card_id": card_id
+        })
+
+    except ValueError as e:
+
+        return jsonify({"success": False, "error": str(e)}), 400
+
+    except RuntimeError as e:
+
+        return jsonify({"success": False, "error": str(e)}), 409
+
+    except Exception as e:
+        return jsonify({"success": False, "error": str(e)}), 500
+
 @app.route('/api/fines', methods=['GET'])
 def pay_fines():
     card_id = request.args.get('q', '').strip()
