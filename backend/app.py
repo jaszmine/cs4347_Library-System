@@ -40,17 +40,12 @@ def search():
         return jsonify({'success': True, 'books': [], 'message': 'Enter search term'})
     
     try:
-        # Call your function - but we need to capture its output
-        # Since it prints, let me adapt it
-        
-        # For now, let's use its logic directly
         import mysql.connector
-        
-        # YOUR database connection from book_search.py
+
         db = mysql.connector.connect(
             host='127.0.0.1',
             user='root',
-            password='password',  # Your password
+            password='password',
             database='Library'
         )
         cursor = db.cursor()
@@ -125,6 +120,57 @@ def get_fines():
             'fines': fines
         })
         
+    except Exception as e:
+        return jsonify({'success': False, 'error': str(e)}), 500
+
+@app.route('/api/fines', methods=['GET'])
+def pay_fines():
+    """Call fines.py functions"""
+
+    card_id = request.args.get('q', '').strip()
+
+    try:
+        # Use fines.py logic
+        import mysql.connector
+        from datetime import date
+
+        db = mysql.connector.connect(
+            host='127.0.0.1',
+            user='root',
+            password='password',
+            database='Library'
+        )
+        cursor = db.cursor(dictionary=True)
+
+        # YOUR fines.py query for listing fines
+        cursor.execute("""
+            SELECT loan_id, due_date, date_in
+            FROM book_loans
+            WHERE (date_in > due_date)
+            OR (date_in IS NULL AND due_date < CURDATE())
+            """, (card_id,))
+
+        still_out = cursor.fetchall()
+
+        if still_out:
+            print("Cannot pay fines — borrower still has books checked out.")
+            cursor.close()
+            db.close()
+            return
+
+        cursor.execute("""
+        UPDATE fines f
+        JOIN book_loans bl ON f.loan_id = bl.loan_id
+        SET f.paid = 1
+        WHERE bl.card_id = %s AND f.paid = 0
+        """, (card_id,))
+
+        return jsonify({
+            'success': True,
+            'message': "All fines successfully paid for card_id:",
+            'card_id': card_id
+        })
+
     except Exception as e:
         return jsonify({'success': False, 'error': str(e)}), 500
 
