@@ -1,4 +1,7 @@
 import mysql.connector
+import tkinter
+from tkinter import ttk
+from tkinter import *
 
 def book_search(search):
 
@@ -21,9 +24,36 @@ def book_search(search):
 
     print("NO  ISBN       TITLE                                                                                                                                                                                                    AUTHORS                                            BORROWED")
     count = 1
+    #for (isbn, title, name, borrowed) in cursor:
+    #    print("{: <3} {: <10} {: <200} {: <50} {: <1}".format(count, isbn, title, name, borrowed))
+    #    count += 1
+
+    root = tkinter.Tk()
+    root.geometry('1000x1000')
+    listbox = Listbox(root, width=300)
+
+    listbox.pack(side = LEFT, fill = BOTH)
+
+    scrollbar = Scrollbar(root)
+
+    scrollbar.pack(side = RIGHT, fill = BOTH)
+
+# Insert elements into the listbox
+    count = 1
+    listbox.insert(END, "NO  ISBN       TITLE                                                                                                                                                                                                    AUTHORS                                            BORROWED")
     for (isbn, title, name, borrowed) in cursor:
-        print("{: <3} {: <10} {: <200} {: <50} {: <1}".format(count, isbn, title, name, borrowed))
+        listbox.insert(END, "{: <3} {: <10} {: <200} {: <50} {: <1}".format(count, isbn, title, name, borrowed))
         count += 1
+
+# Attaching Listbox to Scrollbar
+# Since we need to have a vertical
+# scroll we use yscrollcommand
+    listbox.config(yscrollcommand = scrollbar.set)
+
+# setting scrollbar command parameter
+# to listbox.yview method its yview because
+# we need to have a vertical view
+    scrollbar.config(command = listbox.yview)
 
     cursor.close()
 
