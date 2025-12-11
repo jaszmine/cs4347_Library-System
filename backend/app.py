@@ -84,7 +84,6 @@ def search():
 
 @app.route('/api/fines', methods=['GET'])
 def get_fines():
-    """Call fines.py functions"""
     try:
         # Use fines.py logic
         import mysql.connector
@@ -125,8 +124,6 @@ def get_fines():
 
 @app.route('/api/fines', methods=['GET'])
 def pay_fines():
-    """Call fines.py functions"""
-
     card_id = request.args.get('q', '').strip()
 
     try:
@@ -159,10 +156,10 @@ def pay_fines():
             return
 
         cursor.execute("""
-        UPDATE fines f
-        JOIN book_loans bl ON f.loan_id = bl.loan_id
-        SET f.paid = 1
-        WHERE bl.card_id = %s AND f.paid = 0
+            UPDATE fines f
+            JOIN book_loans bl ON f.loan_id = bl.loan_id
+            SET f.paid = 1
+            WHERE bl.card_id = %s AND f.paid = 0
         """, (card_id,))
 
         return jsonify({
